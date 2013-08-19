@@ -30,7 +30,7 @@ class Deploy
         name: @name
         #html: content
         type: 'DASHBOARD'
-        timeboxFilter: 'none'
+        timeboxFilter: @timeboxFilter or 'none'
         pid: mtab
         editorMode: 'create'
         cpoid: @cpoid
@@ -107,14 +107,15 @@ class Deploy
     @logger('Calling _finish')
     cb(null)
 
-  createNewPage: (cpoid, name, content, tab, shared, callback) ->
+  createNewPage: (cpoid, name, content, tab, shared, timeboxFilter, callback) ->
     @logger("Calling New Page")
-    @tab = tab
-    @name = name
-    @cpoid = cpoid
-    @content = content
-    @shared = shared
-    me = @
+    @tab           = tab
+    @name          = name
+    @cpoid         = cpoid
+    @content       = content
+    @shared        = shared
+    @timeboxFilter = timeboxFilter
+    me             = @
 
     @dashboardOid = 0
     @panelOid = 0
@@ -133,12 +134,12 @@ class Deploy
 
     async.waterfall tasks, (err) =>
       @logger('Tasks are done.  Retuning')
-      callback(null, @dashboardOid, @panelOid)
+      callback(err, @dashboardOid, @panelOid)
 
   updatePage: (doid, poid, cpoid, name, tab, content, callback) ->
     #callback ?= () ->
 
-    @_login (err, res, b) ->
+    @_login (err, res, b) =>
       mtab = tab or 'myhome'
 
       options =
@@ -152,8 +153,9 @@ class Deploy
           settings: JSON.stringify {title: name, content: content}
           gestrure: 'changepanelsettings'
 
-      request options, (error, results, body) ->
-        callback()
+      request options, (error, results, body) =>
+        @logger(error)
+        callback(error)
 
   _login: (callback) ->
     #callback ?= () ->

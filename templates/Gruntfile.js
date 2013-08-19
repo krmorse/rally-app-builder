@@ -88,15 +88,16 @@ module.exports = function(grunt) {
 
     rallydeploy: {
       options: {
-        server: "rally1.rallydev.com",
+        server: config.server,
         projectOid: 0,
         deployFile: "deploy.json",
-        credentialsFile: "credentials.json"
+        credentialsFile: "credentials.json",
+        timeboxFilter: "none"
       },
       prod: {
         options: {
           tab: "myhome",
-          pageName: "App Name",
+          pageName: config.name,
           shared: false
         }
       }

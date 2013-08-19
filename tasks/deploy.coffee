@@ -19,6 +19,7 @@ module.exports = (grunt) ->
 
 
     deployer = new Deploy(credentialsData.username, credentialsData.password, @options().server)
+    deployer.logger = grunt.verbose.writeln.bind(grunt.verbose)
 
     updateApp = deployData[target]?.appId?
 
@@ -27,9 +28,9 @@ module.exports = (grunt) ->
     done = @async()
 
     if not updateApp
-      #console.log("Creating new page")
-      deployer.createNewPage @options().projectOid, @options().pageName, appContents, @options().tab, @options().shared, (err, pageId, appId) =>
-        #console.log(pageId, appId)
+      grunt.verbose.writeln("Creating new page")
+      deployer.createNewPage @options().projectOid, @options().pageName, appContents, @options().tab, @options().shared, @options().timeboxFilter, (err, pageId, appId) =>
+        grunt.verbose.writeln("Page created, page: #{pageId}, AppId: #{appId}")
         deployData[target] = 
           pageId: pageId + ""
           appId: appId + ""
