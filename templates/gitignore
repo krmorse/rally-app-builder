@@ -16,4 +16,11 @@ node_modules
 #IDE Files
 .idea
 .c9revisions
-node_modules
+
+
+#grunt private
+
+.grunt
+
+#jasmine
+_SpecRunner.html
