@@ -15,6 +15,7 @@ files =
   "gitignore": ".gitignore"
   "LICENSE": "LICENSE"
   "Gruntfile.js": "Gruntfile.js"
+  ".travis.yml": ".travis.yml"
   "App-debug.html": "templates/App-debug.html"
   "App.html": "templates/App.html"
   "specs.tmpl": "templates/specs.tmpl"
