@@ -2,6 +2,7 @@ _ = require 'lodash'
 fs = require 'fs'
 path = require 'path'
 mustache = require 'mustache'
+configModule = require './config'
 
 files =
   "app.css": "app.css"
@@ -50,6 +51,3 @@ module.exports = (args, callback)->
     callback(error)
   else
     callback()
-
-
-
